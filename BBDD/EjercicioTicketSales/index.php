@@ -40,23 +40,25 @@ require_once 'Conexion.php';
             echo "<tr><td>$sesion->fecha</td>";
             echo "<td>$sesion->hora</td>";
 
-            $con = (new Connection())->getPdo();
-            $stmt = $con->prepare("SELECT * FROM entradas WHERE idSesion = :session");
-            $stmt->bindParam(':session', $sesion->id);
+            // Entradas vendidas
+            $stmt = $con->prepare("SELECT count(*) as value FROM entradas WHERE idSesion = :session");
+            $stmt->bindParam(':session', $sesion->idSesion);
             $stmt->execute();
-            $entradasVendidas = $stmt->fetchAll();
-            $con = (new Connection())->getPdo();
+            $entradasVendidas = $stmt->fetch();
+
+            // Entradas posibles
             $stmt = $con->prepare("SELECT * FROM teatros WHERE idTeatro = :teatro");
             $stmt->bindParam(':teatro', $teatro);
             $stmt->execute();
             $entradasPosibles = $stmt->fetchAll();
-            $entradasPosibles = $entradasPosibles[0]->filas * $entradasPosibles[0]->columnas;
-            if($entradasPosibles > count($entradasVendidas)){
+
+            $calculoEntradasPosibles = $entradasPosibles[0]->filas * $entradasPosibles[0]->columnas;
+            if ($entradasVendidas->value < $calculoEntradasPosibles) {
                 echo "<td><a href='butacas.php?session=$sesion->idSesion'><img src='./img/tickets.jpeg'></a></td>";
+            } else {
+                echo "<td><img src='./img/agotadas.jpeg'></td>";
             }
-            else{
-                echo "<td><img src='./img/agotadas.jpeg'></td>'";
-            }
+
             echo "</tr>";
         }
         echo "</table>";
