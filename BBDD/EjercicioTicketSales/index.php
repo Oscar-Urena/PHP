@@ -25,15 +25,16 @@ require_once 'Conexion.php';
     if(isset($_REQUEST['sala'])){
         $teatro = $_SESSION['teatro'];
         $con = (new Connection())->getPdo();
-        $stmt = $con->prepare("SELECT * FROM sesiones WHERE teatro = :teatro");
-        $stmt->bindParam(':teatro', $teatro);
-        $stmt->execute();
-        $sesiones = $stmt->fetchAll();
         $stmt = $con->prepare("SELECT * FROM teatros WHERE idTeatro = :teatro");
         $stmt->bindParam(':teatro', $teatro);
         $stmt->execute();
         $teatros = $stmt->fetchAll();
+        echo "<h1>{$teatros[0]->teatro}</h1>";
 
+        $stmt = $con->prepare("SELECT * FROM sesiones WHERE teatro = :teatro");
+        $stmt->bindParam(':teatro', $teatro);
+        $stmt->execute();
+        $sesiones = $stmt->fetchAll();
         echo "<table border='1'>";
         foreach ($sesiones as $sesion) {
             echo "<tr><td>$sesion->fecha</td>";
@@ -51,7 +52,7 @@ require_once 'Conexion.php';
             $entradasPosibles = $stmt->fetchAll();
             $entradasPosibles = $entradasPosibles[0]->filas * $entradasPosibles[0]->columnas;
             if($entradasPosibles > count($entradasVendidas)){
-                echo "<td><a href='butacas.php?session=$sesion->idSesion'><img src='./img/tickets.jpeg'></a></td>'";
+                echo "<td><a href='butacas.php?session=$sesion->idSesion'><img src='./img/tickets.jpeg'></a></td>";
             }
             else{
                 echo "<td><img src='./img/agotadas.jpeg'></td>'";
@@ -75,7 +76,7 @@ require_once 'Conexion.php';
             foreach($teatros as $teatro){
                 echo "<tr>";
                 echo "<td><a href='index.php?teatro=$teatro->idTeatro'>".$teatro->teatro."</a></td>";
-                echo "<td><img src=" . './img/'.$teatro->imagen."></td>";
+                echo "<td><a href='index.php?teatro=$teatro->idTeatro'><img src=" . './img/'.$teatro->imagen."></a></td>";
                 echo "</tr>";
             }
             echo "</table>";
