@@ -25,23 +25,38 @@ if(isset($_SESSION['usuario'])){
     echo "<th>Delete</th>";
     echo "</tr>";
     $con = (new Connection())->getPdo();
-    $stmt = $con->prepare("SELECT * FROM users WHERE nick = :usuario");
+    $stmt = $con->prepare("SELECT iduser FROM users WHERE nick = :usuario");
     $stmt->bindParam(':usuario', $usuario);
     $stmt->execute();
     $datosUser = $stmt->fetch();
-    $stmt = $con->prepare("SELECT * FROM messages WHERE refsender=:usuario");
+    $stmt = $con->prepare("SELECT idcontact FROM contacts WHERE iduser = :usuario");
     $stmt->bindParam(':usuario', $datosUser->iduser);
     $stmt->execute();
-    $mensajes = $stmt->fetchAll();
-    foreach ($mensajes as $mensaje) {
+    $contacts = $stmt->fetchAll();
+    $stmt = $con->prepare("SELECT name FROM users WHERE iduser = :usuario");
+    foreach ($contacts as $contact) {
         echo "<tr>";
-        echo "<td>{$mensaje->idmessage}</td>";
-        echo "<td>{$mensaje->refrecipient}</td>";
-        echo "<td><a href='messages.php'><img src='./img/msg.png' style='width: 30px'></a></td>";
+        echo "<td>$contact->idcontact</td>";
+        $stmt->bindParam(':usuario', $contact->idcontact);
+        $stmt->execute();
+        $recipient = $stmt->fetch();
+        echo "<td>{$recipient->name}</td>";
+        echo "<td><a href='messages.php?recipient={$recipient->name}'><img src='./img/msg.png' style='width: 30px'></a></td>";
         echo "</tr>";
     }
+    echo "<tr><td><a href='newContact.php'>// New contact</a></td></tr>";
     echo "</table>";
     echo "<hr class='linea'>";
+    echo "<a href='messages.php?showmsg=1'>Show messages</a> ";
+    echo "<a href='index.php?logout=1'>Log out</a>";
+
+    $stmt = $con->prepare("SELECT count(*) FROM messages WHERE refrecipient = :usuario and leido = 0");
+    $stmt->bindParam(':usuario', $_SESSION['usuario']);
+    $stmt->execute();
+    if($stmt->rowCount() > 0){
+        echo "<h3>You have unread messages...{$stmt->rowCount()}</h3>";
+    }
+
 }else{
     header('Location: index.php');
 }

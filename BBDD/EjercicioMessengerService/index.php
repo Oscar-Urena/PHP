@@ -13,11 +13,14 @@
 </head>
 <body>
 <?php
-
+if(isset($_REQUEST['logout'])){
+    session_destroy();
+    header("Location: index.php");
+}
 if(!isset($_SESSION["usuario"])){
-    if(isset($_POST["submit"])){
-        $usuario = $_POST["usuario"];
-        $password = $_POST["password"];
+    if(isset($_REQUEST["submit"])){
+        $usuario = $_REQUEST["usuario"];
+        $password = $_REQUEST["password"];
         $con = (new Connection())->getPdo();
         try{
             $stmt = $con->prepare("SELECT * FROM users WHERE nick = :usuario AND password = :password");

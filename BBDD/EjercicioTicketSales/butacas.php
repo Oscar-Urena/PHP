@@ -34,7 +34,7 @@ if(isset($_REQUEST["session"])){
             $stmt->bindParam(':columna', $columna);
             $stmt->execute();
         }
-        header("Location: butacas.php?sala=".$_SESSION["teatro"]."&comprado=1");
+        header("Location: butacas.php?session={$_REQUEST['session']}");
     }elseif (isset($_REQUEST["comprado"])){
 
     }else{
