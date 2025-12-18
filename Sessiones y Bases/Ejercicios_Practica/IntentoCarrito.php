@@ -17,7 +17,7 @@ if(isset($_COOKIE["usuario"])){
         setcookie($usuario, "", time() - 3600);
         echo "Hola ".$usuario."<br>";
     }
-    echo"<form action='IntentoCarrito.php' method='POST'>
+    echo "<form action='IntentoCarrito.php' method='POST'>
 <input type='text' name='usuario' value='usuario'>
 <input type='submit' value='submit'>
 </form>

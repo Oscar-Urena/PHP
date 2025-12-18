@@ -22,7 +22,7 @@
                 echo "<p>No students introduced yet</p>";
             }else{
                 foreach($_SESSION["user"]["students"] as $student){
-                    echo $student->getLastName() . " " . $student->getFirstName() . " " . $student->getYear();
+                    echo $student->getLastName() . " list.php" . $student->getFirstName() . " " . $student->getYear();
                     $clases = $student->getSubjects();
                     if(sizeof($clases) == 0){
                         echo "<p>No classes introduced yet</p>";

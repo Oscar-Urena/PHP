@@ -1,0 +1,36 @@
+.tablaAlumno{
+    margin: auto;
+    background-color: lightgray;
+}
+
+.tablaAlumnoTr{
+    background-color: black;
+}
+
+.tablaAlumnoTr th{
+    color: whitesmoke;
+    padding: 10px;
+}
+
+.tablaAlumno td{
+    padding-inline: 5px;
+}
+.tablaAlumno a{
+    text-decoration: none;
+    color: lightslategray;
+}
+
+h2{
+    text-align: center;
+}
+
+#actualizar{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+.actualizar{
+    text-align: right;
+}
+
+

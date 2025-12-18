@@ -19,7 +19,7 @@ if(isset($_SESSION["usuario"])){
     echo "<hr>";
     $con = (new Connection())->getPdo();
     $stmt = $con->prepare("SELECT iduser FROM users WHERE nick = :nick");
-    $stmt->bindValue(":nick", $_SESSION["usuario"]);
+    $stmt->bindValue(":nick", $_SESSION["usuario"][$_REQUEST["indice"]]);
     $stmt->execute();
 
     $idUsuario = $stmt->fetch()->iduser;
@@ -37,7 +37,7 @@ if(isset($_SESSION["usuario"])){
     }
     echo "</ul>";
     echo "<hr>";
-    echo "<a href='agenda.php'>Return to agenda</a>";
+    echo "<a href='agenda.php?indice={$_REQUEST['indice']}'>Return to agenda</a>";
 }else{
     header("location:index.php");
 }

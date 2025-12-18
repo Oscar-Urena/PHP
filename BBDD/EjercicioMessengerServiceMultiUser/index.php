@@ -17,8 +17,7 @@ if(isset($_REQUEST['logout'])){
     session_destroy();
     header("Location: index.php");
 }
-if(!isset($_SESSION["usuario"])){
-    if(isset($_REQUEST["submit"])){
+if(isset($_REQUEST["submit"]) && !isset($_REQUEST["extra"])){
         $usuario = $_REQUEST["usuario"];
         $password = $_REQUEST["password"];
         $con = (new Connection())->getPdo();
@@ -28,8 +27,12 @@ if(!isset($_SESSION["usuario"])){
             $stmt->bindParam(":password", $password);
             $stmt->execute();
             if($stmt->rowCount() > 0){
-                $_SESSION["usuario"] = $usuario;
-                header("Location: agenda.php");
+                if(!isset($_SESSION["usuario"][0])){
+                    $_SESSION["usuario"] = [];
+                }
+                array_push($_SESSION["usuario"], $usuario);
+                $indice = array_search($usuario, $_SESSION["usuario"]);
+                header("Location: agenda.php?indice=$indice");
             }else{
                 echo "Lo siento, usuario o password incorrecto";
                 "<a href='index.html'>Volver</a>";
@@ -48,9 +51,6 @@ if(!isset($_SESSION["usuario"])){
         echo "<hr class='linea'>";
         echo "<input type='submit' name='submit' value='Entrar'>";
     }
-}else{
-    header("Location: agenda.php");
-}
 
 ?>
 </body>

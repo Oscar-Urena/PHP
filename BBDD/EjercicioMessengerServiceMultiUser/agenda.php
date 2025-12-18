@@ -14,8 +14,26 @@
 <body>
 <?php
 if(isset($_SESSION['usuario'])){
-    $usuario = $_SESSION['usuario'];
+    $usuario = $_SESSION['usuario'][$_REQUEST['indice']];
     echo "<h2>{$usuario} dashboard</h2>";
+    echo "
+    <form method='post'>
+        <select name='user' id='user' onchange='cambiarUser()'>";
+            for ($i = 0; $i < count($_SESSION['usuario']); $i++) {
+                if($i == $_REQUEST['indice']){
+                    echo "<option value='" . ($i) . "' selected>{$_SESSION['usuario'][$i]}</option>";
+                }else{
+                    echo "<option value='" . ($i) . "'>{$_SESSION['usuario'][$i]}</option>";
+                }
+
+            }
+    echo "</select></form>
+    <script>
+    function cambiarUser(){
+        window.location.href = 'agenda.php?indice=' + document.querySelector('#user').value;
+    }
+    </script>
+    ";
     echo "<hr class='linea'>";
     echo "<table>";
     echo "<tr>";
@@ -41,13 +59,14 @@ if(isset($_SESSION['usuario'])){
         $stmt->execute();
         $recipient = $stmt->fetch();
         echo "<td>{$recipient->name}</td>";
-        echo "<td><a href='messages.php?recipient={$recipient->name}'><img src='./img/msg.png' style='width: 30px'></a></td>";
+        echo "<td><a href='messages.php?indice={$_REQUEST['indice']}&recipient={$recipient->name}'><img src='./img/msg.png' style='width: 30px'></a></td>";
         echo "</tr>";
     }
-    echo "<tr><td><a href='newContact.php'>// New contact</a></td></tr>";
+    echo "<tr><td><a href='newContact.php?indice={$_REQUEST['indice']}'>// New contact</a></td></tr>";
     echo "</table>";
     echo "<hr class='linea'>";
     echo "<a href='messages.php?showmsg=1'>Show messages</a> ";
+    echo "<a href='index.php?extra=1'>Log in with another acount</a> ";
     echo "<a href='index.php?logout=1'>Log out</a>";
 
     $stmt = $con->prepare("SELECT * FROM messages WHERE refrecipient = :usuario and leido = 0");

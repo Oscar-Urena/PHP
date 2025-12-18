@@ -15,11 +15,12 @@
 <?php
 $con = (new Connection())->getPdo();
 if(isset($_SESSION['usuario'])){
+    $usuario = $_SESSION['usuario'][$_REQUEST['indice']];
     if(isset($_REQUEST['showmsg'])){
-        echo "<h1>Messages sent to {$_SESSION['usuario']}</h1>";
+        echo "<h1>Messages sent to {}</h1>";
         echo "<hr class='linea'>";
         $stmt = $con->prepare("SELECT iduser FROM users WHERE nick = :usuario");
-        $stmt->bindParam(":usuario", $_SESSION['usuario']);
+        $stmt->bindParam(":usuario", $usuario);
         $stmt->execute();
         $idUser = $stmt->fetch();
         $stmt = $con->prepare("SELECT * FROM messages WHERE refrecipient = :id ");
@@ -75,11 +76,11 @@ if(isset($_SESSION['usuario'])){
         echo "<hr class='linea'>";
         echo "<a href='agenda.php'>Return to agenda</a>";
     }else if(!isset($_REQUEST['submit'])){
-        echo "<h1>Inbox of " . $_SESSION['usuario'] . "</h1>";
+        echo "<h1>Inbox of " . $usuario . "</h1>";
         echo "<hr class='linea'>";
         echo "<form method='post' action='messages.php'>";
         echo "To:<input type='text' name='destinatario' value='{$_REQUEST['recipient']}'><br>";
-        echo "From:<input type='text' name='remitente' value='{$_SESSION['usuario']}'><br>";
+        echo "From:<input type='text' name='remitente' value='{$usuario}'><br>";
         echo "Subject: <input type='text' name='subject' placeholder='Subject'><br>";
         echo " <textarea name='message' placeholder='Message'></textarea><br>";
         echo "<input type='submit' name='submit' value='Send'>";
@@ -90,7 +91,7 @@ if(isset($_SESSION['usuario'])){
         if(isset($_REQUEST['submit'])){
             $destinatario = $_REQUEST['destinatario'];
             $remitente = $_REQUEST['remitente'];
-            if($remitente == $_SESSION['usuario']){
+            if($remitente == $usuario){
 
                 $stmt = $con->prepare("SELECT idUser FROM users WHERE nick = :usuario");
                 $stmt->bindParam(":usuario", $remitente);
