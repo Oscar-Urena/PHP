@@ -92,10 +92,13 @@ class User
     public static function deleteUser($id){
         $content = file_get_contents("../data/usuarios.json");
         $users = json_decode($content, true);
-        array_splice($users, $id, 1);
+        $id = (int) $id;
+        unset($users[$id]);
+        $users = array_values($users);
         $file = fopen("../data/usuarios.json", "w");
         fwrite($file, json_encode($users));
         fclose($file);
+        return json_encode(["success" => true, "eliminado" => $id]);
     }
 
     public function create()

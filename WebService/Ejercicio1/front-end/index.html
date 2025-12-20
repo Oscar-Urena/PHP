@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<form action="" method="post" class="formulario">
+    <label for="name">Name:</label><input type="text" name="name" id="name" placeholder="Enter your name">
+    <label for="surname">Surname:</label><input type="text" name="surname" id="surname"
+                                                placeholder="Enter your surname">
+    <label for="birthday">Birthday</label><input type="date" name="birthday" id="birthday">
+    <label for="country">Country</label>
+    <select name="country" id="country">
+        <option value="">Selecciona un país</option>
+        <option value="Spain">Spain</option>
+        <option value="France">France</option>
+        <option value="Germany">Germany</option>
+        <option value="Italy">Italy</option>
+        <option value="Portugal">Portugal</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="Ireland">Ireland</option>
+        <option value="Netherlands">Netherlands</option>
+        <option value="Belgium">Belgium</option>
+        <option value="Switzerland">Switzerland</option>
+        <option value="Austria">Austria</option>
+        <option value="Sweden">Sweden</option>
+        <option value="Norway">Norway</option>
+        <option value="Denmark">Denmark</option>
+        <option value="Finland">Finland</option>
+        <option value="Poland">Poland</option>
+        <option value="Czech Republic">Czech Republic</option>
+        <option value="Slovakia">Slovakia</option>
+        <option value="Hungary">Hungary</option>
+        <option value="Romania">Romania</option>
+        <option value="Bulgaria">Bulgaria</option>
+        <option value="Greece">Greece</option>
+        <option value="Turkey">Turkey</option>
+        <option value="Croatia">Croatia</option>
+        <option value="Slovenia">Slovenia</option>
+        <option value="Serbia">Serbia</option>
+        <option value="Ukraine">Ukraine</option>
+        <option value="United States">United States</option>
+        <option value="Canada">Canada</option>
+    </select>
+
+    <input type="button" value="Save" id="save">
+    <input type="button" value="New" id="New">
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Birthday</th>
+        <th>Country</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<p id="msg"></p>
+<script src="./js/app.js"></script>
+</body>
+</html>
