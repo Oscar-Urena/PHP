@@ -102,7 +102,7 @@ const cumpleaniosApp = (() => {
             let indice = 0;
             data.forEach(element => {
                 elemento = document.createElement("tr");
-                elemento.setAttribute("id", ++indice);
+                elemento.setAttribute("id", indice++);
                 subelemento = document.createElement("td");
                 subelemento.textContent = element.name;
                 elemento.appendChild(subelemento);
