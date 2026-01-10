@@ -23,10 +23,16 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         echo User::deleteUser(htmlspecialchars($_GET["id"]));
         break;
     case "PUT":
-        $PUT = json_decode(file_get_contents("php://input"), true);
-        $user = new User($PUT['name'], $PUT['surname'], $PUT['birthday'], $PUT['country']);
+        parse_str(file_get_contents("php://input"), $PUT);
+        $user = new User(
+            htmlspecialchars($PUT['name']),
+            htmlspecialchars($PUT['surname']),
+            htmlspecialchars($PUT['birthday']),
+            htmlspecialchars($PUT['country'])
+        );
         $id = htmlspecialchars($_GET["id"]);
         $user->update($id);
+        echo json_encode(["message" => "Usuario actualizado"]);
         break;
     default:
         echo "Error con el método.";

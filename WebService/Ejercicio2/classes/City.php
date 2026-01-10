@@ -1,6 +1,10 @@
 <?php
 
 
+namespace classes;
+
+use data\Conexion;
+
 require_once __DIR__ . "/../data/Conexion.php";
 
 
@@ -10,7 +14,9 @@ class City
     private $name;
     private $population;
     private $country;
-    public function __construct($name, $population, $country){
+
+    public function __construct($name, $population, $country)
+    {
         $this->name = $name;
         $this->population = $population;
         $this->country = $country;
@@ -98,9 +104,6 @@ class City
         $result = $stmt->fetchAll();
         return json_encode($result);
     }
-
-
-
 
 
 }

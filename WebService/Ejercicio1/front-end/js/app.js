@@ -12,14 +12,14 @@ const cumpleaniosApp = (() => {
     };
 
     const establecerObjetos=()=>{
-        btnSave = document.querySelector("#name");
-        btnNew = document.querySelector("#surname");
-        nombre = document.querySelector("#birthday");
-        apellido = document.querySelector("#pais");
+        nombre = document.querySelector("#name");
+        apellido = document.querySelector("#surname");
         fecha = document.querySelector("#birthday");
         pais = document.querySelector("#country");
         tbody = document.querySelector("tbody");
         msg = document.querySelector("#msg");
+        btnSave = document.querySelector("#save");
+        btnNew = document.querySelector("#new");
     }
 
     const establecerEventos=()=>{
@@ -29,11 +29,11 @@ const cumpleaniosApp = (() => {
 
     const guardarCumple=async()=>{
         try {
-            const response = await fetch("./Ejercicio1/back-end/controller/user.controller.php", {
+            const response = await fetch("../back-end/controller/user.controller.php", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
-                },  
+                },
                 body: `nombre=${nombre.value}&apellido=${apellido.value}&fecha=${fecha.value}&pais=${pais.value}`
             });
             if (!response.ok) {
@@ -127,10 +127,10 @@ const cumpleaniosApp = (() => {
                     await updateUser(element.textContent);
                 });
                 elemento.appendChild(subelemento);
-                
+
                 tbody.appendChild(elemento);
             });
-            
+
         } catch (error) {
             console.log(error);
         }

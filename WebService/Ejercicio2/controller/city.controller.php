@@ -1,6 +1,8 @@
 <?php
 
 
+use classes\City;
+
 header("Content-Type: application/json");
 
 require_once "../classes/City.php";
