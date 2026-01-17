@@ -1,9 +1,7 @@
 <?php
-// app.php - Página principal con la tabla de ciudades
 
 session_start();
 
-// Función para obtener todas las ciudades
 function getCities() {
     try {
         $response = file_get_contents("./controller/city.controller.php");
@@ -13,14 +11,11 @@ function getCities() {
     }
 }
 
-// Procesar acciones POST/DELETE/PUT
 $mensaje = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Aquí puedes agregar lógica para guardar
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'delete':
-                // Llamar al endpoint de eliminación
                 $id = $_POST['id'] ?? '';
                 $context = stream_context_create([
                     'http' => [
