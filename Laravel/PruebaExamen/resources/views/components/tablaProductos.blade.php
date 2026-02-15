@@ -1,0 +1,11 @@
+<table>
+    <tr>
+        <th>S#</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Action</th>
+    </tr>
+</table>
