@@ -1,31 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\productsController;
 
-Route::get('/', function () {
+Route::get('/',          [productsController::class, 'index']);
+Route::get('/add',       [productsController::class, 'create']);
+Route::get('/show/{id}', [productsController::class, 'show']);
+Route::get('/edit/{id}',  [productsController::class, 'edit']);
 
-    $categoryID = request('category');
+Route::put('/edit/{id}',  [productsController::class, 'update']);
 
-    if($categoryID){
-        $products = \App\Models\Products::where('category_id', $categoryID)->get();
-    } else {
-        $products = \App\Models\Products::all();
-    }
+Route::post('/add',      [productsController::class, 'store']);
 
-    return view('listado', [
-        'categories' => \App\Models\Categories::all(),
-        'products' => $products,
-        'selectedCategory' => $categoryID  // ← Agregado para mantener selección
-    ]);
-});
-
-Route::get('/add', function () {
-    return view('addNew');
-});
-
-Route::get('/show/{id}', function () {
-    $product = \App\Models\Products::find(request('id'));
-    return view('show',[
-        'product' => $product
-    ]);
-});
+Route::delete('/delete/{id}', [productsController::class, 'destroy']);

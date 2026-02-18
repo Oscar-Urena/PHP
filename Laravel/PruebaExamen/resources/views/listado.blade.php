@@ -114,13 +114,19 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->quantity }}</td>
                     <td>{{ number_format($product->price, 2) }}</td>
-                    <td>{{ $product->category_id}}</td>
+                    <td>{{ $product->category->description }}</td>
                     <td>
                         <a href="/show/{{ $product->id }}">
                             <button class="btn-show">Show</button>
                         </a>
-                        <button class="btn-edit">Edit</button>
-                        <button class="btn-delete">Delete</button>
+                        <a href="/edit/{{ $product->id }}">
+                            <button class="btn-edit">Edit</button>
+                        </a>
+                        <form action="/delete/{{ $product->id }}" method="POST" style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
